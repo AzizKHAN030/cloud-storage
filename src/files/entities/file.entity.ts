@@ -7,6 +7,12 @@ import {
 } from 'typeorm';
 import { UserEntity } from '../../users/entities/user.entity';
 
+export enum FileType {
+  PHOTOS = 'photos',
+  TRASH = 'trash',
+  ALL = 'all',
+}
+
 @Entity('files')
 export class FileEntity {
   @PrimaryGeneratedColumn()

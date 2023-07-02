@@ -24,10 +24,6 @@ export class FilesService {
       query.andWhere('file.deletedAt IS NOT NULL').withDeleted();
     }
 
-    if (fileType === FileType.ALL) {
-      query.withDeleted();
-    }
-
     return query.getMany();
   }
 

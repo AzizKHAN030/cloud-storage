@@ -1,29 +1,27 @@
 
 import {NextPage, GetServerSidePropsContext} from 'next';
-import  Header  from '@/components/Header';
 import { checkAuth } from '@/utils/checkAuth';
 import {Layout} from '@/layouts/Layout';
 import Api from '@/api';
 import { FileItem } from '@/api/dto/files.dto';
 import { FileList } from '@/components/FileList';
 import { DashboardLayout } from '@/layouts/DashboardLayout';
-import { FileActions } from '@/components/FileActions';
 import { Files } from '@/modules/Files';
 
 interface Props  {
     items: FileItem[]
 }
 
-const DashboardPage: NextPage<Props> = ({items})=>{
+const DashboardTrash: NextPage<Props> = ({items})=>{
     return (
         <DashboardLayout>
-            <Files items={items} withActions/>
+              <Files items={items}/>
         </DashboardLayout>
     )
 }
 
-DashboardPage.getLayout = (page: React.ReactNode) => {
-    return <Layout title = {"Dashboard"}>{page}</Layout>
+DashboardTrash.getLayout = (page: React.ReactNode) => {
+    return <Layout title = {"Dashboard/Trash"}>{page}</Layout>
 }
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
@@ -34,7 +32,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
    }
 
    try {
-    const items = await Api.getAll();
+    const items = await Api.getAll('trash');
 
     return {
         props:{
@@ -52,4 +50,4 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
    }
 }
 
-export default DashboardPage;
+export default DashboardTrash;

@@ -4,10 +4,15 @@ import React from 'react'
 import styles from './Auth.module.scss'
 import Api from '@/api';
 import { setCookie } from 'nookies';
+import { useState } from 'react';
 
 export const LoginForm:React.FC = () => {
+    const [loading, setLoading] = useState(false);
+
     const onSubmit = async (values: LoginFormDTO) =>{
         try {
+            setLoading(true);
+
             const {token} = await Api.login(values);
 
             notification.success({
@@ -26,6 +31,7 @@ export const LoginForm:React.FC = () => {
                 description:"Invalid password or email",
                 duration:2
             })
+            setLoading(false);
         }
     }
 
@@ -54,7 +60,7 @@ export const LoginForm:React.FC = () => {
                 placeholder='Password'
             />
             </Form.Item>
-            <Button type="primary" htmlType="submit">Login</Button>
+            <Button type="primary" htmlType="submit" loading={loading}>Login</Button>
         </Form>
     </div>
   )
